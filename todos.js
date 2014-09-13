@@ -11,6 +11,8 @@ var ds = new datastore.Dataset({
 });
 
 app.use(bodyParser.json());
+app.use('/public', express.static('./public'));
+
 
 var todoListName = 'default-list';
 
