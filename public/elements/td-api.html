@@ -1,0 +1,49 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-ajax/core-ajax.html">
+
+<polymer-element name="td-api" attributes="baseURL items">
+  
+  <template>
+    <core-ajax id="allTodos" handleAs="json" on-core-response="{{onAllTodos}}">
+    </core-ajax>
+    <core-ajax id="insertTodo" handleAs="json" on-core-response="{{onInsertTodo}}">
+    </core-ajax>
+  </template>
+
+	<script>
+		Polymer('td-api', {
+		  baseURL: "http://localhost:8080/",
+			ready: function() {
+			  // maybe fetch all todos?
+			},
+			insertTodo: function( text ) {
+  			this.$.insertTodo.url = this.baseURL + 'todos';
+  			this.$.insertTodo.method = 'POST';
+  			this.$.insertTodo.body = '{"text": "' + text + '"}';
+  			this.$.insertTodo.contentType = 'application/json';
+			  this.$.insertTodo.go();
+			},
+			getTodo: function( todoId ) {
+			  
+			},
+			completeTodo: function( text, done, todoId ) {},
+			deleteTodo: function( todoId ) {
+			  
+			},
+			allTodos: function() {
+			  this.$.allTodos.url = this.baseURL + 'todos';
+			  this.$.allTodos.go();
+			},
+			clearDoneTodos: function() {
+			  
+			},
+			onAllTodos: function( e ) {
+			  console.log(e.detail.response);
+			},
+			onInsertTodo: function( e ) {
+			  console.log(e.detail.response);
+			  this.items.push( e.detail.response );
+			}
+	 });
+	</script>
+</polymer-element>
